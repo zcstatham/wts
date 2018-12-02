@@ -1,0 +1,25 @@
+{
+  "name": "wts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zcstatham/wts.git"
+  },
+  "author": "zc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zcstatham/wts/issues"
+  },
+  "homepage": "https://github.com/zcstatham/wts#readme",
+  "devDependencies": {
+    "ts-loader": "^5.3.1",
+    "typescript": "^3.2.1",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
