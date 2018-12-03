@@ -4,7 +4,10 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build_dll": "webpack --config webpack.dll.config.js",
+    "build": "webpack --report",
+    "build_production": "set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress",
+    "server": "webpack-dev-server --inline --open"
   },
   "repository": {
     "type": "git",
@@ -17,9 +20,18 @@
   },
   "homepage": "https://github.com/zcstatham/wts#readme",
   "devDependencies": {
+    "babel-loader": "^8.0.4",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "jquery": "^3.3.1",
+    "style-loader": "^0.23.1",
     "ts-loader": "^5.3.1",
     "typescript": "^3.2.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "url-loader": "^1.1.2",
     "webpack": "^4.26.1",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2"
   }
 }
