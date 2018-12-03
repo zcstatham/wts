@@ -9,6 +9,6 @@ async function ab(){
     console.log(0);
     await a.loadGroup('preload');
     console.log(5);
-    document.body.innerHTML = a.getImg('shareindex');
+    document.body.append(a.getImg('shareindex'))
 }
 ab();

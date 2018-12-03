@@ -239,27 +239,25 @@
             this.complete = false;
         }
 
-        public loadGroup(name){
+        public async loadGroup(name){
             let imgs = [];
             let oimgs = {};
-            for(let index in this.oList.name){
-                if(this.oList.name.hasOwnProperty(index)) {
-                    oimgs[index] = this.oList.resource.index;
-                }
+            for(let item of this.oList.groups[name].split(',')){
+                oimgs[item] = this.oList.resources[item];
             }
             for(let index in oimgs){
                 if(oimgs.hasOwnProperty(index)){
                     let img = new Image();
                     img.src = oimgs[index];
-                    img.name = oimgs[index];
+                    img.name = index;
                     imgs.push(img);
                 }
             }
             console.log(2);
-            Promise.all(imgs).then((res)=>{
+            await Promise.all(imgs).then((res)=>{
                 console.log(3);
-                res.forEach((item,index)=>{
-                    this.iList[item.target.name] = item.target;
+                res.forEach((item)=>{
+                    this.iList[item.name] = item;
                     this.complete = true;
                 })
             });

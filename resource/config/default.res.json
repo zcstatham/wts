@@ -3,8 +3,8 @@
     "preload": "shareindex,shareplay,shareuser"
   },
   "resources": {
-    "shareindex": "/resource/assets/shareindex.jpg",
-    "shareplay": "/resource/assets/shareplay.jpg",
-    "shareuser": "/resource/assets/shareuser.jpg"
+    "shareindex": "../resource/assets/shareindex.jpg",
+    "shareplay": "../resource/assets/shareplay.jpg",
+    "shareuser": "../resource/assets/shareuser.jpg"
   }
 }
