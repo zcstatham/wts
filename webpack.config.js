@@ -25,7 +25,7 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /\.ts$/,
+            test: /\.tsx?$/,
             use: "ts-loader",
             exclude: /node_modules/
         },{
@@ -87,7 +87,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({// html插件
             filename: 'index.html',
-            template: __dirname + '/src/index.html', //new 一个这个插件的实例，并传入相关的参数
+            template: __dirname + '/index.html', //new 一个这个插件的实例，并传入相关的参数
             // favicon: __dirname + '/src/assets/favicon.ico',
             inject: true,
             chunks:['manifest','common','main'],
