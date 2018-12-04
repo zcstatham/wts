@@ -18,7 +18,7 @@ module.exports = {
     devtool: 'eval-source-map',
     devServer: {
         inline: true,
-        port: 8088
+        port: 18888
     },
     externals: {
         // jquery: 'jQuery'
