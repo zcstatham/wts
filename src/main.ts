@@ -1,14 +1,38 @@
 /**
  * Created by Administrator on 2018/12/2.
  */
-import {ImgLoader} from "./game/app";
+import {Game} from "./game/Game";
 
-const data = require('../resource/config/default.res.json');
-let a = new ImgLoader(data);
-async function ab(){
-    console.log(0);
-    await a.loadGroup('preload');
-    console.log(5);
-    document.body.append(a.getImg('shareindex'))
-}
-ab();
+const box = document.getElementById("stage_box");
+
+window.onload = (event)=>{
+    let canvas = document.createElement("canvas");
+    canvas.id = "stage";
+    box.appendChild(canvas);
+
+    window.onresize = (event)=> {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    // if (Object.keys(request).length) {
+    //     if (!request.hasOwnProperty('gameId') || !request.hasOwnProperty('rt') || !request.hasOwnProperty('orderId')) {
+    //         request = {
+    //             rt: 1,
+    //             gameId: 1,
+    //             orderId: 0
+    //         }
+    //     }
+    // } else {
+    //     request = {
+    //         rt: 1,
+    //         gameId: 1,
+    //         orderId: 0
+    //     }
+    // }
+    new Game(canvas, {
+        layout: document.body,
+        gameModel: 1
+    });
+};

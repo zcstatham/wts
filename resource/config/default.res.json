@@ -1,10 +1,30 @@
 {
   "groups": {
-    "preload": "shareindex,shareplay,shareuser"
+    "preload": "main_bg_jpg,main_bottom_mask_png,piece_floor_png,bollet_png,game_try_png,level_1_icon_png,level_2_icon_png,level_3_icon_png,level_icon_lock_png,level_1_icon_active_png,level_2_icon_active_png,level_3_icon_active_png,piece_1_png,piece_2_png,piece_3_png,piece_4_png,piece_5_png,piece_6_png,piece_7_png,piece_8_png,piece_icon_png,piece_label_png,times_bg_png"
   },
   "resources": {
-    "shareindex": "../resource/assets/shareindex.jpg",
-    "shareplay": "../resource/assets/shareplay.jpg",
-    "shareuser": "../resource/assets/shareuser.jpg"
+    "main_bg_jpg": "../resource/assets/main_bg.jpg",
+    "main_bottom_mask_png": "../resource/assets/main_bottom_mask.png",
+    "piece_floor_png": "../resource/assets/piece_floor.png",
+    "bollet_png": "../resource/assets/bollet.png",
+    "game_try_png": "../resource/assets/game_try.png",
+    "level_1_icon_png": "../resource/assets/level_1_icon.png",
+    "level_2_icon_png": "../resource/assets/level_2_icon.png",
+    "level_3_icon_png": "../resource/assets/level_3_icon.png",
+    "level_icon_lock_png": "../resource/assets/level_icon_lock.png",
+    "level_1_icon_active_png": "../resource/assets/level_1_icon_active.png",
+    "level_2_icon_active_png": "../resource/assets/level_2_icon_active.png",
+    "level_3_icon_active_png": "../resource/assets/level_3_icon_active.png",
+    "piece_1_png": "../resource/assets/piece_1.png",
+    "piece_2_png": "../resource/assets/piece_2.png",
+    "piece_3_png": "../resource/assets/piece_3.png",
+    "piece_4_png": "../resource/assets/piece_4.png",
+    "piece_5_png": "../resource/assets/piece_5.png",
+    "piece_6_png": "../resource/assets/piece_6.png",
+    "piece_7_png": "../resource/assets/piece_7.png",
+    "piece_8_png": "../resource/assets/piece_8.png",
+    "piece_icon_png": "../resource/assets/piece_icon.png",
+    "piece_label_png": "../resource/assets/piece_label.png",
+    "times_bg_png": "../resource/assets/times_bg.png"
   }
 }

@@ -5,7 +5,7 @@
   "main": "main.ts",
   "scripts": {
     "build_dll": "webpack --config webpack.dll.config.js",
-    "build": "webpack --report",
+    "build": "webpack --mode development",
     "build_production": "set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress",
     "server": "webpack-dev-server --inline --open"
   },
@@ -33,6 +33,7 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.26.1",
     "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   }
 }

@@ -91,10 +91,10 @@ module.exports = {
             // favicon: __dirname + '/src/assets/favicon.ico',
             inject: true,
             chunks:['manifest','common','main'],
-            minify:{
-                collapseWhitespace:true,//压缩空白
-                removeAttributeQuotes:true//删除属性双引号
-            }
+            // minify:{
+            //     collapseWhitespace:true,//压缩空白
+            //     removeAttributeQuotes:true//删除属性双引号
+            // }
         }),
         new ExtractTextPlugin('./css/[name]_[hash].css'),
         new UglifyjsWebpackPlugin()
