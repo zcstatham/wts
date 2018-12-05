@@ -1,5 +1,5 @@
 import {Player} from "./Player";
-import {Bitmap, DisplayContainer, ImgLoader, Polygon, TextField, Tick} from "./app";
+import {Bitmap, DisplayContainer, extend, ImgLoader, Polygon, TextField, Tick} from "./app";
 import {OBOTTOM, PARAMETERS, PieceH, PieceW, PlayerH, PlayerW, POINTS, STAGEH, STAGEW} from "./GameData";
 import {Piece} from "./Piece";
 
@@ -121,12 +121,27 @@ export class Game {
     }
 
     public normalResults(){
+        console.log(1);
         //pieces +1 左右界限
-
+        if(this.pieces.children.length < this.pieceNum){
+            this.pieces['leftx'] = this.piece.container.x;
+            this.pieces['rightx'] = this.piece.container.x + this.piece.container.width;
+            let piece = extend(new Bitmap(),this.piece.skin);
+            piece.x = this.piece.container.x;
+            piece.y = this.piece.container.y;
+            this.pieces.addChild(piece)
+        }else{
+            this.nextLevel();
+        }
+        this.piece_box.removeChildAt(this.piece_box.children.length -1);
         //初始化piece 宽
-
-        //初始化香水
-
+        let swidth = this.pieces['rightx']-this.pieces['leftx'];
+        let sx = (PieceW - swidth)/2;
+        this.piece.reset({
+            sx:sx,
+            swidth:swidth,
+            points: [[0,0],[swidth,0],[swidth,PieceH],[0,PieceH]]
+        });
     }
 
     public updata () {
@@ -260,9 +275,6 @@ export class Game {
             });
             this.layout.addChild(this.try_label);
         }
-        //piece 堆块绘制
-        this.pieces = new DisplayContainer({x: 41, y: 148});
-        this.layout.addChild(this.pieces);
         //floor 绘制
         this.floor =  new Bitmap({
             x:101, y:1115,
@@ -270,6 +282,9 @@ export class Game {
             skin: ImgLoader.getInstance().getImg('piece_floor_png')
         });
         this.layout.addChild(this.floor);
+        //piece 堆块绘制
+        this.pieces = new DisplayContainer();
+        this.layout.addChild(this.pieces);
         //piece 绘制
         let piece = new Bitmap({
             width: PieceW, height: PieceH,

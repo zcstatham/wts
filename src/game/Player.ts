@@ -22,16 +22,22 @@ export class Player{
     private isSuccess: boolean;
 
     public constructor(_skin,points,func1,func2,target){
-        this.checkW = CHECKW;
         this.bottom = OBOTTOM;
-        this.jSpeed = PlayerV;
-        this.isJump = false;
-        this.isDrop = false;
-        this.jumpDirection = 'up';
         this.successFunc = func1;
         this.failFunc = func2;
         this.target = target;
+        this.reset();
         this.init(_skin,points);
+    }
+
+    private reset(){
+        this.checkW = CHECKW;
+        this.jSpeed = PlayerV;
+        this.isJump = false;
+        this.isDrop = false;
+        this.isSuccess = false;
+        this.jumpDirection = 'up';
+        this.dropDirection = null;
     }
 
     private init(_skin,points){
@@ -74,16 +80,14 @@ export class Player{
         }else if(this.isSuccess){
             this.container.y += 30 * G;
             if (this.container.y >= this.bottom - this.container.height) {
-                this.isSuccess = false;
+                this.reset();
                 this.container.y = this.bottom - this.container.height;
-                this.failFunc && this.failFunc.call(this.target);
+                this.successFunc && this.successFunc.call(this.target);
             }
         }
         if(this.dropDirection && this.dropDirection[2]){
-            ctx.save();
             ctx.rotate(this.dropDirection[2]*Math.PI/180);
             this.container.paint(ctx);
-            ctx.restore();
         }else{
             this.container.paint(ctx);
         }

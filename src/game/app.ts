@@ -88,7 +88,7 @@ export class DisplayContainer {
     public height: any;
     public scaleX: any;
     public scaleY: any;
-    private children: any;
+    public children: any;
 
     public constructor(option?) {
         let options = extend({
@@ -126,6 +126,10 @@ export class DisplayContainer {
                 return this.children[index]
             }
         }
+    }
+
+    public removeChildAt(idx) {
+        this.children.splice(idx, 1);
     }
 
     public removeChild(particle) {
@@ -281,9 +285,9 @@ export class Bitmap {
     public sheight: number;
     public width: number;
     public height: number;
-    private skin: HTMLImageElement;
+    public skin: HTMLImageElement;
 
-    public constructor(option) {
+    public constructor(option?) {
         let options = extend({
             x: 0,
             y: 0,
@@ -302,8 +306,8 @@ export class Bitmap {
     }
 
     public paint(ctx) {
-        if (this.swidth && this.sheight && this.sx && this.sy) {
-            ctx.drawImage(this.skin, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+        if (this.swidth && this.sheight && this.sx) {
+            ctx.drawImage(this.skin, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y,this.swidth, this.sheight);
         } else {
             ctx.drawImage(this.skin, this.x, this.y, this.width, this.height);
         }
