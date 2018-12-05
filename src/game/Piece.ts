@@ -12,7 +12,7 @@ export class Piece extends Bitmap{
     }
 
     public paint(ctx){
-        if(x<300){
+        if(this.x<300){
 
         }
     }
