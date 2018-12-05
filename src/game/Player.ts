@@ -1,25 +1,36 @@
 import {Bitmap, DisplayContainer, Polygon, Skin} from "./app";
-import {CHECKW, G, JSPEED, OBOTTOM, POINTS, STAGEW} from "./GameData";
+import {CHECKW, G, OBOTTOM, PieceH, PieceV, PlayerV, PlayerW, POINTS, STAGEW} from "./GameData";
 
 export class Player{
     public isJump: boolean;
+    public isDrop: boolean;
+    public width: number;
+    public height: number;
+    public jSpeed: number;
+    public container: DisplayContainer;
+    public polygon:Polygon;
+    public bottom: number;
+    public jumpDirection: string;
+    public dropDirection: number[];
     private skin:Bitmap;
-    private polygon:Polygon;
-    private container: DisplayContainer;
     private points: number[][];
     private checkW: number;
     private oldY: number;
-    private bottom: number;
-    private width: number;
-    private height: number;
-    private jSpeed: number;
-    private direction: string;
+    private successFunc: Function;
+    private failFunc: Function;
+    private target: any;
+    private isSuccess: boolean;
 
-    public constructor(_skin,points){
+    public constructor(_skin,points,func1,func2,target){
         this.checkW = CHECKW;
         this.bottom = OBOTTOM;
-        this.jSpeed = JSPEED;
-        this.direction = 'up';
+        this.jSpeed = PlayerV;
+        this.isJump = false;
+        this.isDrop = false;
+        this.jumpDirection = 'up';
+        this.successFunc = func1;
+        this.failFunc = func2;
+        this.target = target;
         this.init(_skin,points);
     }
 
@@ -34,37 +45,60 @@ export class Player{
         this.container = new DisplayContainer({x: x, y: y});
         this.container.addChild(this.polygon,'polygon');
         this.container.addChild(this.skin);
+        this.container.width = this.skin.width;
+        this.container.height = this.skin.height;
     }
 
     public paint(ctx){
-        if(this.isJump && this.jSpeed >0 && this.direction === 'up'){
+        if(this.isJump && this.jSpeed >0 && this.jumpDirection === 'up'){
             this.jSpeed = Math.round((this.jSpeed - G)*10) / 10;
             this.container.y -= this.jSpeed - 0.5*G;
-        }else if(this.isJump && this.jSpeed >=0 && this.direction === 'down'&& this.container.y<=930){
+        }else if(this.isJump && this.jSpeed >=0 && this.jumpDirection === 'down'&& this.container.y<=this.bottom-this.container.height){
             this.jSpeed = Math.round((this.jSpeed + G)*10) / 10;
             this.container.y += this.jSpeed + 0.5*G;
-        }else if(this.isJump && this.jSpeed >0 && this.direction === 'down'&& this.container.y>930){
-            this.container.y = 930;
-            this.direction = 'up';
+        }else if(this.isJump && this.jSpeed >0 && this.jumpDirection === 'down'&& this.container.y>this.bottom-this.container.height){
+            this.container.y = this.bottom-this.container.height;
+            this.jumpDirection = 'up';
             this.isJump = false;
         }else if(this.isJump && this.jSpeed <=0){
             this.jSpeed = 0;
-            this.direction = 'down'
+            this.jumpDirection = 'down'
+        }else if(this.isDrop){
+            this.container.y += PlayerV;
+            this.container.x += this.dropDirection[0]*PieceV;
+            if (this.container.y >= this.bottom - this.container.height) {
+                this.isDrop = false;
+                this.container.y = this.bottom - this.container.height;
+                this.failFunc && this.failFunc.call(this.target);
+            }
+        }else if(this.isSuccess){
+            this.container.y += 30 * G;
+            if (this.container.y >= this.bottom - this.container.height) {
+                this.isSuccess = false;
+                this.container.y = this.bottom - this.container.height;
+                this.failFunc && this.failFunc.call(this.target);
+            }
         }
-        this.container.paint(ctx);
+        if(this.dropDirection && this.dropDirection[2]){
+            ctx.save();
+            ctx.rotate(this.dropDirection[2]*Math.PI/180);
+            this.container.paint(ctx);
+            ctx.restore();
+        }else{
+            this.container.paint(ctx);
+        }
     }
 
-    public drop(direction,func,target){
-        let dropSpeed = 1.2 * G;
-        this.container.y += dropSpeed * this.jSpeed;
-        this.container.x -= dropSpeed * 10;
-        if (this.container.y >= OBOTTOM - this.height) {
-            func && func.call(target);
-        }
+    public drop(direction){
+        this.isJump = false;
+        this.isDrop = true;
+        this.dropDirection = direction;
     }
 
     public down(){
-        this.skin.y += 0.3 * G;
+        this.isJump = false;
+        this.isSuccess = true;
+        this.bottom -= PieceH;
     }
 
     public resetBottom(y){

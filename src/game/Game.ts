@@ -1,6 +1,6 @@
 import {Player} from "./Player";
-import {Bitmap, DisplayContainer, ImgLoader, TextField, Tick} from "./app";
-import {PARAMETERS, POINTS, STAGEH, STAGEW} from "./GameData";
+import {Bitmap, DisplayContainer, ImgLoader, Polygon, TextField, Tick} from "./app";
+import {OBOTTOM, PARAMETERS, PieceH, PieceW, PlayerH, PlayerW, POINTS, STAGEH, STAGEW} from "./GameData";
 import {Piece} from "./Piece";
 
 const data = require('../../resource/config/default.res.json');
@@ -13,7 +13,7 @@ export class Game {
     private level: number;
     private bottle: Player;
     private floor: Bitmap;
-    private piece: Bitmap;
+    private piece: Piece;
     private splitPiece: Bitmap;
     private try_label: Bitmap;
     private level_change: Bitmap;
@@ -59,7 +59,11 @@ export class Game {
         let clickEvent = 'ontouchend' in document ? 'touchend' : 'click';
         options.layout.addEventListener(clickEvent, (event)=>{
             event.preventDefault();
-            this.bottle.isJump = true;
+            if(this.bottle.isJump || this.bottle.isDrop){
+                return
+            }else{
+                this.bottle.isJump = true;
+            }
         });
         this.tick = new Tick(this.updata, this);
         this.gameStart();
@@ -103,6 +107,7 @@ export class Game {
     public gameOver () {
         this.isOver = true;
         this.isCanTap = false;
+        this.tick.stop();
         this.gameOverHandle(this.level);
     }
 
@@ -115,22 +120,64 @@ export class Game {
         }
     }
 
+    public normalResults(){
+        //pieces +1 左右界限
+
+        //初始化piece 宽
+
+        //初始化香水
+
+    }
+
     public updata () {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (!this.isPause && !this.isOver) {
-            if (!this.isCanTap) {
-                let temp = this.bottle;
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            if (this.bottle.isJump) {
+                let bottle = this.bottle;
+                let piece = this.piece;
                 /*碰撞检测START*/
-                // if (temp.y <= BASEPOS.y + BASEPOS.r + this.bullet.h - this.bullet.piercedDeep) {
-                //     var checkCollisionResult = this.checkCollision.call(this, temp);
-                //     if (checkCollisionResult.isCollision) {
-                //         this.bullet.isFail = true;
-                //         this.bullet.failDirection = checkCollisionResult.failDirection;
-                //         this.bullet.failSpeed = RotaSpeed;
-                //     }else if (temp.y === BASEPOS.y + BASEPOS.r) {
-                //         this.normalResults.call(this);
-                //     }
-                // }
+                if (bottle.container.y >= OBOTTOM - PieceH * 2 - PlayerH * 2 &&
+                    bottle.container.y <= OBOTTOM - PieceH- PlayerH &&
+                    piece.container.x >= STAGEW / 2 - PieceW - PlayerW / 2 &&
+                    piece.container.x <= STAGEW / 2 + PlayerW / 2
+                ) {
+                    console.log('碰撞检测');
+                    // console.log(bottle.polygon.points);
+                    // console.log(piece.polygon.points)
+                    if(bottle.jumpDirection === 'up'){
+                        let direction = [];
+                        direction[0] = piece.direction;
+                        direction[1] = 1;
+                        bottle.drop(direction);
+                    }else if(bottle.jumpDirection === 'down'){
+                        let piece_y = OBOTTOM - PlayerH - PieceH * 2;
+                        if((
+                            bottle.container.y > piece_y - bottle.container.height &&
+                            bottle.container.y < piece_y + piece.container.height) && ((
+                            piece.container.x >= bottle.container.x &&
+                            piece.container.x <= bottle.container.x + bottle.container.width) || (
+                            piece.container.x + piece.container.width >= bottle.container.x &&
+                            piece.container.x + piece.container.width <= bottle.container.x + bottle.container.width
+                        ))) {
+                            bottle.drop([piece.direction,1,0.02]);
+                        }else if(
+                            bottle.container.y ===  piece.container.y &&
+                            bottle.container.x <= piece.container.x &&
+                            bottle.container.x+bottle.container.width>=piece.container.x
+                        ){
+                            bottle.drop([-1,1,0.02]);
+                        }else if(
+                            bottle.container.y ===  piece.container.y &&
+                            bottle.container.x <= piece.container.x+piece.container.width &&
+                            bottle.container.x+bottle.container.width>=piece.container.x+piece.container.width
+                        ){
+                            bottle.drop([1,1,0.02]);
+                        }else{
+                            piece.down();
+                            bottle.down();
+                        }
+                    }
+                }
             }
             this.layout.paint(this.ctx);
         }
@@ -223,19 +270,20 @@ export class Game {
             skin: ImgLoader.getInstance().getImg('piece_floor_png')
         });
         this.layout.addChild(this.floor);
-        //bollet 绘制
-        let bollet = new Bitmap({
-            width: 130, height: 205,
-            skin: ImgLoader.getInstance().getImg('bollet_png')
-        });
-        this.bottle = new Player(bollet,POINTS);
-        this.layout.addChild(this.bottle);
         //piece 绘制
-        this.piece = new Piece({
-            width: 340, height: 60,
+        let piece = new Bitmap({
+            width: PieceW, height: PieceH,
             skin: ImgLoader.getInstance().getImg('piece_' + Math.floor(Math.random() * 7 + 1) + '_png')
         });
+        this.piece = new Piece(piece,POINTS);
         this.layout.addChild(this.piece);
+        //bollet 绘制
+        let bollet = new Bitmap({
+            width: PlayerW, height: PlayerH,
+            skin: ImgLoader.getInstance().getImg('bollet_png')
+        });
+        this.bottle = new Player(bollet,POINTS,this.normalResults,this.gameOver,this);
+        this.layout.addChild(this.bottle);
         //mask 绘制
         let mask =  new Bitmap({
             x:0, y:971,

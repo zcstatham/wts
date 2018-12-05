@@ -154,12 +154,12 @@ export class DisplayContainer {
 }
 
 export class Shape {
-    private x: number;
-    private y: number;
-    private width: number;
-    private height: number;
-    private scaleX: number;
-    private scaleY: number;
+    public x: number;
+    public y: number;
+    public width: number;
+    public height: number;
+    public scaleX: number;
+    public scaleY: number;
     private lineWidth: number;
     private fillStyle: string;
     private strokeStyle: string;
@@ -190,11 +190,11 @@ export class Shape {
 }
 
 export class Circle {
-    private x: number;
-    private y: number;
-    private r: number;
-    private scaleX: number;
-    private scaleY: number;
+    public x: number;
+    public y: number;
+    public r: number;
+    public scaleX: number;
+    public scaleY: number;
     private color: string;
 
     public constructor(option) {
@@ -225,8 +225,8 @@ export class Circle {
 }
 
 export class TextField {
-    private x: number;
-    private y: number;
+    public x: number;
+    public y: number;
     private text: string;
     private font: string;
 
@@ -246,7 +246,7 @@ export class TextField {
 }
 
 export class Polygon {
-    private points: [number, number][];
+    public points: [number, number][];
     private strokeStyle: string;
     private fillStyle: string;
 
