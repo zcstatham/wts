@@ -20,6 +20,7 @@ export class Player{
     private failFunc: Function;
     private target: any;
     private isSuccess: boolean;
+    private angle: number;
 
     public constructor(_skin,points,func1,func2,target){
         this.bottom = OBOTTOM;
@@ -42,6 +43,7 @@ export class Player{
 
     private init(_skin,points){
         this.skin = _skin;
+        this.angle = 0;
         let [x, y] = [STAGEW * 0.5 - this.skin.width*0.5, this.bottom - this.skin.height];
         this.oldY =  y;
         this.polygon = new Polygon({
@@ -71,9 +73,10 @@ export class Player{
             this.jumpDirection = 'down'
         }else if(this.isDrop){
             this.container.y += PlayerV;
-            this.container.x += this.dropDirection[0]*PieceV;
-            if (this.container.y >= this.bottom - this.container.height) {
+            this.container.x += this.dropDirection[0]*PieceV*2;
+            if (this.container.y >= OBOTTOM - this.container.height) {
                 this.isDrop = false;
+                this.dropDirection = null;
                 this.container.y = this.bottom - this.container.height;
                 this.failFunc && this.failFunc.call(this.target);
             }
@@ -86,8 +89,10 @@ export class Player{
             }
         }
         if(this.dropDirection && this.dropDirection[2]){
-            ctx.rotate(this.dropDirection[2]*Math.PI/180);
-            this.container.paint(ctx);
+            this.angle += this.dropDirection[2];
+            ctx.translate(this.container.x+this.container.width/2,this.container.y+this.container.height/2);
+            ctx.rotate(this.angle*Math.PI/180);
+            this.skin.paint(ctx);
         }else{
             this.container.paint(ctx);
         }

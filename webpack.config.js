@@ -21,7 +21,7 @@ module.exports = {
         port: 18888
     },
     externals: {
-        // jquery: 'jQuery'
+        wx: 'wx'
     },
     module: {
         rules: [{

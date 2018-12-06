@@ -7,14 +7,16 @@ export class Piece {
     public xSpeed: number;
     public polygon:Polygon;
     public container: DisplayContainer;
+    public isAuto: boolean;
+    public isDown: boolean;
     private xA: number = 0.1;
     private xANum: number = 0;
     private isSuccess: boolean;
-    private isAuto: boolean;
     private bottom: number;
 
     public constructor(_skin,points) {
         this.isAuto =  true;
+        this.isDown =  false;
         this.xSpeed =  PieceV;
         this.bottom =  OBOTTOM;
         // this.x = 0;
@@ -23,15 +25,12 @@ export class Piece {
     }
 
     public reset(options) {
+        console.log(name);
         this.container.x =this.container['oX'];
         this.container.y =this.container['oY'];
-        this.skin = new Bitmap({
-            sx: options.sx,
-            sy: 0,
-            swidth: options.swidth,
-            sheight: PieceH,
-            skin: ImgLoader.getInstance().getImg('piece_' + Math.floor(Math.random() * 7 + 1) + '_png')
-        });
+        this.container.removeChildAt(1);
+        this.skin = options.skin;
+        this.container.addChild(this.skin);
         this.polygon = new Polygon({
             points: options.points,
             fillStyle: 'transparent'
@@ -39,6 +38,7 @@ export class Piece {
         this.container.width = this.skin.width || this.skin.swidth;
         this.container.height = this.skin.height || this.skin.sheight;
         this.isAuto = true;
+        this.isDown = false;
         this.isSuccess = false;
     }
 
@@ -73,8 +73,9 @@ export class Piece {
             this.container.x = right_left_x;
         }else if(this.isSuccess){
             this.container.y += 30 * G;
-            if (this.container.y >= this.bottom - this.container.height){
+            if (this.container.y >= this.bottom - PieceH){
                 this.isSuccess = false;
+                this.container.y= this.bottom - PieceH;
                 this.container['oY'] -= this.container.height;
                 this.bottom -= PieceH;
             }
@@ -84,6 +85,7 @@ export class Piece {
     }
 
     down(){
+        this.isDown = true;
         this.isAuto = false;
         this.isSuccess = true;
     }

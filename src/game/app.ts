@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2018/11/24.
  */
+import {PieceH, PieceW} from "./GameData";
 
 let requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function (callback) {
     window.setTimeout(callback, 1000 / 60);
@@ -89,6 +90,7 @@ export class DisplayContainer {
     public scaleX: any;
     public scaleY: any;
     public children: any;
+    public canTouchenable: boolean;
 
     public constructor(option?) {
         let options = extend({
@@ -103,6 +105,7 @@ export class DisplayContainer {
             }
         }
         this.children = [];
+        this.canTouchenable = false;
     }
 
     public addChild(particle, name?) {
@@ -306,8 +309,8 @@ export class Bitmap {
     }
 
     public paint(ctx) {
-        if (this.swidth && this.sheight && this.sx) {
-            ctx.drawImage(this.skin, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y,this.swidth, this.sheight);
+        if (this.swidth && this.sheight) {
+            ctx.drawImage(this.skin, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y,this.swidth, PieceH);
         } else {
             ctx.drawImage(this.skin, this.x, this.y, this.width, this.height);
         }

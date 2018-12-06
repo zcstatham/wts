@@ -3,7 +3,7 @@ export const STAGEW = 750;
 export const STAGEH = 1334;
 export const OBOTTOM = 1135;
 export const PieceH = 48;
-export const PieceW = 200;
+export const PieceW = 272;
 export const PieceV = 5;
 export const PlayerH = 120;
 export const PlayerW = 75;
@@ -15,9 +15,9 @@ export const MAXOIECES = 3;
 export const TRY = "try";
 export const PLAY = "play";
 export const PARAMETERS = {
-    "level_1": [0,6,8,240],
-    "level_2": [0,8,8,32],
-    "level_3": [0,12,8,60]
+    "level_1": [0,8,8,240],
+    "level_2": [0,4,8,32],
+    "level_3": [0,5,8,60]
 };
 export const POINTS = [
     [0, 199], [128, 204], [128, 77], [116.7, 37.4], [90, 43.3],
