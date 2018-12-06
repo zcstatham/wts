@@ -1,5 +1,5 @@
-import {Bitmap, DisplayContainer, Easing, ImgLoader, Polygon} from "./app";
-import {G, OBOTTOM, PieceH, PieceV, PieceW, PlayerH, STAGEW} from "./GameData";
+import {Bitmap, DisplayContainer, Easing, Polygon} from "./app";
+import {G, OBOTTOM, PieceH, PieceV, PlayerH, STAGEW} from "./GameData";
 
 export class Piece {
     public skin:Bitmap;

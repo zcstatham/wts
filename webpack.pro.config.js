@@ -3,17 +3,13 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: __dirname + "/src/main.ts", //已多次提及的唯一入口文件
     output: {
         path:  __dirname + "/dist/",
         filename: "./js/[name]-[hash].js"
-    },
-    devtool: 'eval-source-map',
-    devServer: {
-        inline: true,
-        port: 18888
     },
     externals: {
         wx: 'wx'
@@ -47,9 +43,14 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    outputPath: 'images/'
+                    name: '[name]_[hash:4].[ext]',
+                    outputPath: 'res/assets/'
                 }
             }
+        }, {
+            test: /\.json$/i,
+            type: 'javascript/auto',
+            loader: 'json-loader'
         }]
     },
     resolve: {
@@ -92,6 +93,7 @@ module.exports = {
             }
         }),
         new ExtractTextPlugin('./css/[name]_[hash].css'),
-        new UglifyjsWebpackPlugin()
+        new UglifyjsWebpackPlugin(),
+        new CleanWebpackPlugin(['dist'])
     ]
 };

@@ -1,6 +1,6 @@
 import {Player} from "./Player";
-import {Bitmap, DisplayContainer, extend, ImgLoader, Polygon, Shape, TextField, Tick} from "./app";
-import {OBOTTOM, PARAMETERS, PieceH, PieceW, PlayerH, PlayerW, POINTS, STAGEH, STAGEW} from "./GameData";
+import {Bitmap, DisplayContainer, ImgLoader, Shape, TextField, Tick} from "./app";
+import {PARAMETERS, PieceH, PieceW, PlayerH, PlayerW, POINTS, STAGEH, STAGEW} from "./GameData";
 import {Piece} from "./Piece";
 import {ChangeLevel} from "./ChangeLevel";
 
@@ -99,7 +99,7 @@ export class Game {
                 iheight = item.height || item.sheight,
                 iright = ileft + iwidth,
                 ibottom = itop + iheight;
-            if (item.constructor.name == 'DisplayContainer' && item.children.length > 0 && item.canTouchenable) {
+            if (item.children && item.children.length > 0 && item.canTouchenable) {
                 let ix = (x - item.x) / item.scaleX;
                 let iy = (y - item.y) / item.scaleY;
                 return this.getTapTarget(ix, iy, item);

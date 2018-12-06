@@ -8,12 +8,7 @@ export const PieceV = 5;
 export const PlayerH = 120;
 export const PlayerW = 75;
 export const PlayerV = 20;
-export const JumpH = 720;
-export const PIECEH = 60;
 export const CHECKW = 130;
-export const MAXOIECES = 3;
-export const TRY = "try";
-export const PLAY = "play";
 export const PARAMETERS = {
     "level_1": [0,6,8,240],
     "level_2": [0,8,8,32],

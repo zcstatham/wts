@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: __dirname + "/src/main.ts", //已多次提及的唯一入口文件
@@ -52,7 +53,15 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    outputPath: 'images/'
+                    outputPath: 'res/assets/'
+                }
+            }
+        }, {
+            test:/\.json$/,
+            use: {
+                loader: 'json-loader',
+                options: {
+                    outputPath: 'res/json/'
                 }
             }
         }]
@@ -97,6 +106,7 @@ module.exports = {
             // }
         }),
         new ExtractTextPlugin('./css/[name]_[hash].css'),
-        new UglifyjsWebpackPlugin()
+        new UglifyjsWebpackPlugin(),
+        new CleanWebpackPlugin(['dist'])
     ]
 };

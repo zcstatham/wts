@@ -360,7 +360,6 @@ export class ImgLoader {
                 imgs.push(img_p);
             }
         }
-        console.log(2);
         await Promise.all(imgs).then((res) => {
             console.log(res);
             res.forEach((item) => {

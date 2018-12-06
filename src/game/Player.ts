@@ -1,5 +1,5 @@
-import {Bitmap, DisplayContainer, Polygon, Skin} from "./app";
-import {CHECKW, G, OBOTTOM, PieceH, PieceV, PlayerV, PlayerW, POINTS, STAGEW} from "./GameData";
+import {Bitmap, DisplayContainer, Polygon} from "./app";
+import {CHECKW, G, OBOTTOM, PieceH, PieceV, PlayerV, STAGEW} from "./GameData";
 
 export class Player{
     public isJump: boolean;
