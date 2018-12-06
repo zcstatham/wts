@@ -42,7 +42,7 @@ window.onload = (event)=>{
     // }
     new Game(canvas, {
         layout: canvas,
-        gameModel: 1,
+        gameModel: 2,
         gameSuccessCallback: function(){
             if (!window['__wxjs_environment']) {
                 window.location.reload();

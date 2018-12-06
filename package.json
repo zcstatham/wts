@@ -6,7 +6,7 @@
   "scripts": {
     "build_dll": "webpack --config webpack.dll.config.js",
     "build": "webpack --mode development",
-    "build_production": "set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress",
+    "build_production": "set NODE_ENV=production && webpack --config ./webpack.pro.config.js --progress",
     "server": "webpack-dev-server --inline --open"
   },
   "repository": {
